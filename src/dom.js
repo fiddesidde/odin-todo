@@ -1,18 +1,63 @@
-const showLists = TodoList => {
-    const listOfLists = document.querySelector('#lists');
+import { allLists } from './index';
 
-    const h1 = document.createElement('h1');
-    h1.textContent = TodoList.getName();
+const showLists = () => {
+    for (const list of allLists) {
+        const listOfLists = document.querySelector('#lists');
 
-    const desc = document.createElement('div');
-    desc.textContent = TodoList.getDescription();
+        const h1 = document.createElement('h1');
+        h1.textContent = list.getName();
 
-    const thisList = document.createElement('div');
-    thisList.className = 'list';
+        const desc = document.createElement('div');
+        desc.textContent = list.getDescription();
 
-    thisList.appendChild(h1);
-    thisList.appendChild(desc);
-    listOfLists.appendChild(thisList);
+        const thisList = document.createElement('div');
+        thisList.id = list.getId();
+        thisList.className = 'list';
+
+        thisList.appendChild(h1);
+        thisList.appendChild(desc);
+        thisList.addEventListener('click', e => {
+            const listOfTodos = document.querySelector('#todos');
+            listOfTodos.innerHTML = '';
+            const listId = e.target.id;
+            const hit = allLists.find(list => list.getId() == listId);
+            // console.log(`Target id: ${e.target.id}`);
+            showListItems(hit);
+        });
+        listOfLists.appendChild(thisList);
+    }
 };
 
-export { showLists };
+const showListItems = list => {
+    for (const todo of list.getListItems()) {
+        const listOfTodos = document.querySelector('#todos');
+
+        const title = document.createElement('div');
+        title.textContent = todo.getTitle();
+
+        const dueDate = document.createElement('div');
+        dueDate.textContent = todo.getDueDate();
+
+        const prio = document.createElement('div');
+        switch (todo.getPrio()) {
+            case 1:
+                prio.textContent = 'high';
+            case 2:
+                prio.textContent = 'normal';
+            case 3:
+                prio.textContent = 'low';
+            default:
+                prio.textContent = 'normal';
+        }
+
+        const thisTodo = document.createElement('div');
+        thisTodo.className = 'todo';
+
+        thisTodo.appendChild(title);
+        thisTodo.appendChild(dueDate);
+        thisTodo.appendChild(prio);
+        listOfTodos.appendChild(thisTodo);
+    }
+};
+
+export { showLists, showListItems };

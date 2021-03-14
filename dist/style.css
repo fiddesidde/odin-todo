@@ -3,9 +3,26 @@
 }
 
 #lists {
+    display: flex;
+    flex-direction: column;
     border: 2px solid red;
+    flex-grow: 1;
 }
 
 #todos {
+    display: flex;
+    flex-direction: column;
     border: 2px solid green;
+    flex-grow: 4;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+}
+
+.todo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }

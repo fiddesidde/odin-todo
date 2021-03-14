@@ -1,4 +1,6 @@
-import { showLists } from './dom';
+import { showListItems, showLists } from './dom';
+
+export const allLists = [];
 
 const TodoItem = (title, description, dueDate = new Date(), priority = 2) => {
     let done = false;
@@ -24,42 +26,51 @@ const TodoItem = (title, description, dueDate = new Date(), priority = 2) => {
 };
 
 const TodoList = (name, description) => {
+    const id = Math.round(Math.random() * 10000 + 1);
     let todoItems = [];
     const getName = () => name;
     const getDescription = () => description;
+    const getId = () => id;
     const addTodoItem = TodoItem => todoItems.push(TodoItem);
     const deleteTodoItem = id =>
         (todoItems = todoItems.filter(item => id !== item.getId()));
-    const getList = () => todoItems;
+    const getListItems = () => todoItems;
 
-    return { getName, getDescription, addTodoItem, deleteTodoItem, getList };
+    return {
+        getName,
+        getDescription,
+        addTodoItem,
+        deleteTodoItem,
+        getListItems,
+        getId,
+    };
 };
 
-const testList = TodoList('TestList', 'This is a list used to test stuff');
+const createTodoList = (name, description) => {
+    const list = TodoList(name, description);
+    allLists.push(list);
+    return list;
+};
+
+// TEST STUFF
+
+const testList = createTodoList(
+    'TestList',
+    'This is a list used to test stuff'
+);
 for (let i = 0; i < 3; i++) {
     testList.addTodoItem(TodoItem(`Title${i}`, `description${i}`));
 }
 
-showLists(testList);
+const testList2 = createTodoList(
+    'New testList',
+    'This is a list used to test even more stuff with'
+);
+testList2.addTodoItem(
+    TodoItem('awsome thing', 'yes do this awsome thing', '2023-01-25', 1)
+);
 
-// TEMP TEST STUFF
-// const testitem = TodoItem('hej', 'jag sager hej', 2012, 1);
-// const testitem2 = TodoItem('NEJA', 'ALDRIG I LIVET', 2023, 2);
+// TEST STUFF END
 
-// todoList.addTodoItem(testitem);
-// todoList.addTodoItem(testitem2);
-
-// console.log(todoList.getList());
-
-// console.log(todoList.getList()[0].getId());
-// console.log(todoList.getList()[1].getId());
-
-// const btn = document.querySelector('#test');
-// btn.addEventListener('click', () => {
-//     const itemId = todoList.getList()[1].getId();
-//     todoList.deleteTodoItem(itemId);
-//     console.log(todoList.getList());
-//     console.log(todoList.getList()[0].getId());
-// });
-
-// console.log(todoList.getList());
+showLists();
+showListItems(allLists[0]);
