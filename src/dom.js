@@ -1,28 +1,26 @@
-import { allLists } from './index';
+import { allLists, createTodoList } from './index';
 
 const showLists = () => {
+    const listOfLists = document.querySelector('#lists');
+    const lists = document.querySelectorAll('.list');
+    for (const list of lists) {
+        listOfLists.removeChild(list);
+    }
+
     for (const list of allLists) {
-        const listOfLists = document.querySelector('#lists');
-
-        const h1 = document.createElement('h1');
-        h1.textContent = list.getName();
-
-        const desc = document.createElement('div');
-        desc.textContent = list.getDescription();
-
         const thisList = document.createElement('div');
         thisList.id = list.getId();
         thisList.className = 'list';
+        thisList.textContent = list.getName();
 
-        thisList.appendChild(h1);
-        thisList.appendChild(desc);
         thisList.addEventListener('click', e => {
             const listOfTodos = document.querySelector('#todos');
             listOfTodos.innerHTML = '';
-            const listId = e.target.id;
-            const hit = allLists.find(list => list.getId() == listId);
-            // console.log(`Target id: ${e.target.id}`);
-            showListItems(hit);
+            const clickedListId = e.target.id;
+            const foundList = allLists.find(
+                list => list.getId() == clickedListId
+            );
+            showListItems(foundList);
         });
         listOfLists.appendChild(thisList);
     }
@@ -71,5 +69,12 @@ const showListItems = list => {
         listOfTodos.appendChild(thisTodo);
     }
 };
+
+const input = document.querySelector('#new-list-input');
+const btn = document.querySelector('#new-list-button');
+btn.addEventListener('click', () => {
+    console.log(input.value);
+    createTodoList(input.value);
+});
 
 export { showLists, showListItems };

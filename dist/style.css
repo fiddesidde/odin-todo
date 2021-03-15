@@ -1,3 +1,8 @@
+header {
+    display: flex;
+    justify-content: center;
+}
+
 #container {
     display: flex;
 }
@@ -7,6 +12,7 @@
     flex-direction: column;
     border: 2px solid red;
     flex-grow: 1;
+    padding: 0.3rem 0.3rem 0.3rem 0.3rem;
 }
 
 #todos {
@@ -14,6 +20,11 @@
     flex-direction: column;
     border: 2px solid green;
     flex-grow: 4;
+}
+
+#new-list-div {
+    display: flex;
+    flex-direction: column;
 }
 
 .list {
@@ -25,4 +36,6 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    border: 1px solid orange;
+    margin: 0.3rem 0.3rem 0 0.3rem;
 }

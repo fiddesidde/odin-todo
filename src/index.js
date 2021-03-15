@@ -27,11 +27,10 @@ const TodoItem = (title, description, dueDate = new Date(), priority = 2) => {
     };
 };
 
-const TodoList = (name, description) => {
+const TodoList = name => {
     const id = Math.round(Math.random() * 10000 + 1);
     let todoItems = [];
     const getName = () => name;
-    const getDescription = () => description;
     const getId = () => id;
     const addTodoItem = TodoItem => todoItems.push(TodoItem);
     const deleteTodoItem = id =>
@@ -40,7 +39,6 @@ const TodoList = (name, description) => {
 
     return {
         getName,
-        getDescription,
         addTodoItem,
         deleteTodoItem,
         getListItems,
@@ -48,31 +46,26 @@ const TodoList = (name, description) => {
     };
 };
 
-const createTodoList = (name, description) => {
-    const list = TodoList(name, description);
+export const createTodoList = name => {
+    const list = TodoList(name);
     allLists.push(list);
+    showLists();
     return list;
 };
 
 // TEST STUFF
 
-const testList = createTodoList(
-    'TestList',
-    'This is a list used to test stuff'
-);
+const testList = createTodoList('TestList');
 for (let i = 0; i < 3; i++) {
     testList.addTodoItem(TodoItem(`Title${i}`, `description${i}`));
 }
 
-const testList2 = createTodoList(
-    'New testList',
-    'This is a list used to test even more stuff with'
-);
+const testList2 = createTodoList('New testList');
 testList2.addTodoItem(
     TodoItem('awsome thing', 'yes do this awsome thing', '2023-01-25', 1)
 );
 
 // TEST STUFF END
 
-showLists();
+// showLists();
 showListItems(allLists[0]);

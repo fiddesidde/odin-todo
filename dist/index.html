@@ -8,9 +8,16 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <header><h1>Todooos</h1></header>
     <div id="container">
-        <div id="lists"></div>
-        <div id="todos"></div>
+        <aside id="lists">
+            <div id="new-list-div">
+                <label for="new-list-input">Create new list</label>
+                <input type="text" id="new-list-input" name="new-list-input">
+                <button id="new-list-button">Create</button>
+            </div>
+        </aside>
+        <main id="todos"></main>
     </div>
     <script src="main.js"></script>
 </body>
