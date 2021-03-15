@@ -1,6 +1,6 @@
 import { showListItems, showLists } from './dom';
 
-export const allLists = [];
+const allLists = [];
 
 const TodoItem = (title, description, dueDate = new Date(), priority = 2) => {
   let done = false;
@@ -36,9 +36,9 @@ const TodoList = name => {
   let todoItems = [];
   const getName = () => name;
   const getId = () => id;
-  const addTodoItem = TodoItem => todoItems.push(TodoItem);
-  const deleteTodoItem = id => {
-    todoItems = todoItems.filter(item => id !== item.getId());
+  const addTodoItem = todoItem => todoItems.push(todoItem);
+  const deleteTodoItem = todoItemId => {
+    todoItems = todoItems.filter(item => todoItemId !== item.getId());
   };
   const getListItems = () => todoItems;
 
@@ -51,16 +51,23 @@ const TodoList = name => {
   };
 };
 
-export const createTodoList = name => {
+const createTodoList = name => {
   const list = TodoList(name);
   allLists.push(list);
-  showLists();
+  showLists(allLists);
   return list;
 };
+
+const input = document.querySelector('#new-list-input');
+const btn = document.querySelector('#new-list-button');
+btn.addEventListener('click', () => {
+  createTodoList(input.value);
+});
 
 // TEST STUFF
 
 const testList = createTodoList('TestList');
+
 for (let i = 0; i < 3; i += 1) {
   testList.addTodoItem(TodoItem(`Title${i}`, `description${i}`));
 }
