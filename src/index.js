@@ -13,6 +13,7 @@ const TodoItem = (title, description, dueDate = new Date(), priority = 2) => {
     const setPrio = num => (prio = num);
     const getId = () => id;
     const toggleComplete = () => (done = !done);
+    const isComplete = () => done;
 
     return {
         getTitle,
@@ -22,6 +23,7 @@ const TodoItem = (title, description, dueDate = new Date(), priority = 2) => {
         setPrio,
         getId,
         toggleComplete,
+        isComplete,
     };
 };
 

@@ -32,6 +32,16 @@ const showListItems = list => {
     for (const todo of list.getListItems()) {
         const listOfTodos = document.querySelector('#todos');
 
+        const checkboxDiv = document.createElement('div');
+        checkboxDiv.className = 'checkbox-div';
+        const checkbox = document.createElement('input');
+        if (todo.isComplete()) checkbox.checked = true;
+        checkbox.type = 'checkbox';
+        checkbox.addEventListener('click', () => {
+            todo.toggleComplete();
+            console.log(todo.isComplete());
+        });
+
         const title = document.createElement('div');
         title.textContent = todo.getTitle();
 
@@ -53,6 +63,8 @@ const showListItems = list => {
         const thisTodo = document.createElement('div');
         thisTodo.className = 'todo';
 
+        checkboxDiv.appendChild(checkbox);
+        thisTodo.appendChild(checkboxDiv);
         thisTodo.appendChild(title);
         thisTodo.appendChild(dueDate);
         thisTodo.appendChild(prio);
